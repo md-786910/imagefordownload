@@ -1,22 +1,21 @@
 const addimage = document.querySelector('.addimage');
 
-let getimage = JSON.parse(localStorage.getItem("setImage"));
+let getimage = JSON.parse(localStorage.getItem("itemImage"));
 console.log(getimage);
-let allimage = getimage[0];
+
 function mustImage() {
     let getstr = "";
-    allimage.forEach((element, index) => {
-        console.log(element)
+    getimage.forEach((element, index) => {
         getstr += `
     <div class="md:p-2 p-1 w-1/5">
     <img alt="gallery" class="w-full
     object-cover h-full object-center block"
-    src=${element.thumbnail.thumbnailUrl} onclick="localImage(${index})">
+    src=${element} >
 <div class="iconAdd">
-    <span onclick="deleteimage(${index}) title="delete image">
-        <i class="fa fa-1x fa-trash text-red-700 t"></i>
+    <span  title="delete image" onclick="deleteimg(${index})">
+        <i  class="fa fa-1x fa-trash text-red-700"></i>
     </span>
-    <a href=${element.thumbnail.thumbnailUrl} download>
+    <a href=${element} download>
         <span title="download image">
             <i class="fa fa-1x fa-file-download text-green-700 t"></i>
         </span>
@@ -26,14 +25,20 @@ function mustImage() {
 `
     });
     addimage.innerHTML = getstr;
+
 }
-function deleteimage(index) {
-    console.log(index)
-    let image = getimage[0];
-    // let allimage = image[index].thumbnail.thumbnailUrl;
-    // console.log(allimage)
-    image.splice(index, 1)
+
+function deleteimg(index) {
+    console.log(index);
+    let arr = JSON.parse(localStorage.getItem("itemImage"));
+    console.log(arr)
+    arr.splice(arr, 1)
+    localStorage.setItem("itemImage", JSON.stringify(arr));
+    // const newdata = allitem.filter((elem, ind) => ind != index);
+    // console.log(newdata)
+    window.location.reload();
     mustImage();
 }
+
 
 mustImage();
